@@ -1,7 +1,7 @@
 // ─── TL Nexus Static Site Builder ───
 const fs = require('fs');
 const path = require('path');
-const { WEAPONS, BUILDS, WEATHER_CN, WEATHER_EMOJI, WEATHER_DESC, WEATHER_TYPES, getWeather } = require('./src/data.js');
+const { WEAPONS, BUILDS, GUIDES, WEATHER_CN, WEATHER_EMOJI, WEATHER_DESC, WEATHER_TYPES, getWeather } = require('./src/data.js');
 
 const DIST = path.join(__dirname, 'dist');
 const SRC = path.join(__dirname, 'src');
@@ -12,6 +12,7 @@ if (!fs.existsSync(DIST)) fs.mkdirSync(DIST, { recursive: true });
 if (!fs.existsSync(path.join(DIST, 'css'))) fs.mkdirSync(path.join(DIST, 'css'), { recursive: true });
 if (!fs.existsSync(path.join(DIST, 'build'))) fs.mkdirSync(path.join(DIST, 'build'), { recursive: true });
 if (!fs.existsSync(path.join(DIST, 'js'))) fs.mkdirSync(path.join(DIST, 'js'), { recursive: true });
+if (!fs.existsSync(path.join(DIST, 'guide'))) fs.mkdirSync(path.join(DIST, 'guide'), { recursive: true });
 
 fs.writeFileSync(path.join(DIST, 'css', 'main.css'), CSS);
 
@@ -53,6 +54,7 @@ ${content.meta}
     <div class="nav-links">
       <a href="/" class="nav-link ${content.page==='home'?'active':''}">首页</a>
       <a href="/builds.html" class="nav-link ${content.page==='builds'?'active':''}">Build</a>
+      <a href="/guide/class-guide.html" class="nav-link ${content.page==='guide'?'active':''}">攻略</a>
       <a href="/tierlist.html" class="nav-link ${content.page==='tier'?'active':''}">Tier排名</a>
       <a href="/weather.html" class="nav-link ${content.page==='weather'?'active':''}">天气</a>
     </div>
@@ -105,6 +107,15 @@ const homeBody = `
       <div class="wep-name">${w.name}</div>
       <div class="wep-desc">${w.desc}</div>
     </div>
+  `).join('')}
+</div>
+<div class="section-header">📖 新手攻略 <span class="dim">— 入坑必读</span></div>
+<div class="guide-grid">
+  ${GUIDES.map(g => `
+    <a href="/guide/${g.slug}.html" class="guide-card">
+      <div class="guide-title">${g.title}</div>
+      <div class="guide-summary">${g.summary.slice(0,80)}…</div>
+    </a>
   `).join('')}
 </div>`;
 
@@ -287,6 +298,30 @@ fs.writeFileSync(path.join(DIST, 'weather.html'), html({
   body: weatherBody
 }));
 
+// ─── Guide Pages ───
+GUIDES.forEach(g => {
+  const body = `
+<div class="guide-page">
+  <a href="/" class="back-link">← 返回首页</a>
+  <div class="guide-header">
+    <h1 class="guide-h1">${g.title}</h1>
+    <p class="guide-desc">${g.summary}</p>
+  </div>
+  ${g.sections.map(s => `
+  <div class="guide-section">
+    <h2 class="guide-h2">${s.heading}</h2>
+    <p class="guide-p">${s.content}</p>
+  </div>
+  `).join('')}
+</div>`;
+
+  fs.writeFileSync(path.join(DIST, 'guide', `${g.slug}.html`), html({
+    page:'guide',
+    meta: meta(g.title, g.summary.slice(0,150), `/guide/${g.slug}.html`),
+    body
+  }));
+});
+
 // ─── Sitemap ───
 const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
@@ -294,6 +329,7 @@ const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
   <url><loc>https://berty.gamewayz.com/builds.html</loc><priority>0.9</priority></url>
   <url><loc>https://berty.gamewayz.com/tierlist.html</loc><priority>0.9</priority></url>
   <url><loc>https://berty.gamewayz.com/weather.html</loc><priority>0.8</priority></url>
+  ${GUIDES.map(g => `<url><loc>https://berty.gamewayz.com/guide/${g.slug}.html</loc><priority>0.8</priority></url>`).join('\n  ')}
   ${BUILDS.map(b => `<url><loc>https://berty.gamewayz.com/build/${b.slug}.html</loc><priority>0.7</priority></url>`).join('\n  ')}
 </urlset>`;
 
@@ -302,5 +338,5 @@ fs.writeFileSync(path.join(DIST, 'sitemap.xml'), sitemap);
 // ─── robots.txt ───
 fs.writeFileSync(path.join(DIST, 'robots.txt'), `User-agent: *\nAllow: /\nSitemap: https://berty.gamewayz.com/sitemap.xml`);
 
-console.log(`✅ Generated ${BUILDS.length} build pages + index, builds, tierlist, weather, sitemap`);
+console.log(`✅ Generated ${BUILDS.length} build pages + ${GUIDES.length} guide pages + index, builds, tierlist, weather, sitemap`);
 console.log(`📁 Output: ${DIST}`);

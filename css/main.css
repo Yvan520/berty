@@ -119,6 +119,22 @@ a{color:inherit;text-decoration:none}
 .tier-weapons{font-weight:600;font-size:14px}
 .tier-role{font-size:11px;color:var(--text-dim);margin-top:2px}
 
+/* Guide Cards */
+.guide-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:10px;margin-bottom:10px}
+.guide-card{display:block;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px 18px;transition:all .12s}
+.guide-card:hover{border-color:var(--border-hover);transform:translateY(-1px);box-shadow:0 6px 20px rgba(0,0,0,.3)}
+.guide-title{font-size:14px;font-weight:700;margin-bottom:4px;color:var(--purple-light)}
+.guide-summary{font-size:12px;color:var(--text-dim);line-height:1.5}
+
+/* Guide Detail */
+.guide-page{max-width:700px;margin:0 auto}
+.guide-header{margin-bottom:20px}
+.guide-h1{font-size:22px;font-weight:800;margin-bottom:8px}
+.guide-desc{font-size:14px;color:var(--text-dim);line-height:1.6}
+.guide-section{margin-bottom:20px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:18px 20px}
+.guide-h2{font-size:16px;font-weight:700;color:var(--purple-light);margin-bottom:8px}
+.guide-p{font-size:14px;color:var(--text-dim);line-height:1.8}
+
 /* Weather */
 .weather-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin-bottom:16px}
 .w-select{width:100%;padding:8px 10px;border-radius:6px;border:1px solid var(--border);background:rgba(8,3,18,.6);color:var(--text);font-size:13px;font-family:var(--font);-webkit-appearance:none;appearance:none;cursor:pointer}
