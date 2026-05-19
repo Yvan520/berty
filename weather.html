@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>实时天气 — TL Nexus</title>
+<meta name="description" content="王权与自由实时天气查询，美服/欧服/韩服/日服">
+<meta property="og:title" content="实时天气 — TL Nexus">
+<meta property="og:description" content="王权与自由实时天气查询，美服/欧服/韩服/日服">
+<meta property="og:url" content="https://ro3.gamewayz.com/berty/weather.html">
+<meta property="og:type" content="website">
+<link rel="canonical" href="https://ro3.gamewayz.com/berty/weather.html">
+<link rel="stylesheet" href="/berty/css/main.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚔️</text></svg>">
+</head>
+<body>
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/berty/" class="nav-logo"><span class="nav-logo-icon">⚔️</span><div><div class="nav-logo-title">TL Nexus</div><div class="nav-logo-sub">王权攻略站</div></div></a>
+    <div class="nav-links">
+      <a href="/berty/" class="nav-link ">首页</a>
+      <a href="/berty/builds.html" class="nav-link ">Build</a>
+      <a href="/berty/tierlist.html" class="nav-link ">Tier排名</a>
+      <a href="/berty/weather.html" class="nav-link active">天气</a>
+    </div>
+  </div>
+</nav>
+<main class="main">
+<div class="section-header">☁️ 实时天气 <span class="dim">— 每2小时轮换 · 自动推算</span></div>
+<div class="weather-card">
+  <select id="wSvr" onchange="renderWeather()" class="w-select">
+    <option value="-7" selected>🇺🇸 美服 Throne Peak</option><option value="-5" >🇺🇸 美服 Eclipse Ridge</option><option value="1" >🇪🇺 欧服 Castle Dawn</option><option value="0" >🇪🇺 欧服 Stormwind Valley</option><option value="9" >🇰🇷 韩服 Dragon Valley</option><option value="9" >🇯🇵 日服 Sakura Realm</option><option value="7" >🇸🇬 东南亚 Jade Tiger</option>
+  </select>
+  <div id="wResult">
+    <div style="display:flex;align-items:center;gap:12px;padding:16px 0">
+      <span style="font-size:36px">☀️</span>
+      <div>
+        <div style="font-size:18px;font-weight:700">晴天</div>
+        <div style="font-size:13px;color:#9888b0">视野最佳，远程射程+10%</div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="weather-info">
+  <h3>🌤️ 天气机制说明</h3>
+  <p>游戏内天气每2小时轮换一次，顺序为：晴天→暴雨→浓雾→雷暴→暴雪→循环。</p>
+  <p>不同天气影响技能效果和视野，选择正确的天气出战可以事半功倍。</p>
+  <p>本站根据服务器时区自动推算当前天气。</p>
+</div>
+<div class="weather-table">
+  <h3>天气效果一览</h3>
+  
+    <div class="w-row">
+      <span class="w-emoji">☀️</span>
+      <span class="w-name">晴天</span>
+      <span class="w-desc">视野最佳，远程射程+10%。适合风筝和狙击流派。</span>
+    </div>
+  
+    <div class="w-row">
+      <span class="w-emoji">🌧️</span>
+      <span class="w-name">暴雨</span>
+      <span class="w-desc">水面上升，脚步声降低50%。刺客和河道作战有加成。</span>
+    </div>
+  
+    <div class="w-row">
+      <span class="w-emoji">🌫️</span>
+      <span class="w-name">浓雾</span>
+      <span class="w-desc">视野-70%，远程失效。近战和刺客的黄金天气。</span>
+    </div>
+  
+    <div class="w-row">
+      <span class="w-emoji">⛈️</span>
+      <span class="w-name">雷暴</span>
+      <span class="w-desc">雷系伤害+50%，视野-30%。法师爆发期。</span>
+    </div>
+  
+    <div class="w-row">
+      <span class="w-emoji">❄️</span>
+      <span class="w-name">暴雪</span>
+      <span class="w-desc">冰系控制延长30%，移速-15%。控制流派优势。</span>
+    </div>
+  
+</div></main>
+<footer class="footer"><div class="footer-inner"><div>TL Nexus &middot; 王权与自由玩家攻略站</div><div class="footer-links"><a href="https://github.com/Yvan520/berty">GitHub</a></div></div></footer>
+</body>
+</html>
