@@ -61,7 +61,7 @@ ${content.meta}
   </div>
 </nav>
 <main class="main">${content.body}</main>
-<footer class="footer"><div class="footer-inner"><div>TL Nexus &middot; 王权与自由玩家攻略站</div><div class="footer-links"><a href="https://github.com/Yvan520/berty">GitHub</a></div></div></footer>
+<footer class="footer"><div class="footer-inner"><div>TL Nexus &middot; 王权与自由玩家攻略站</div> </div></footer>
 </body>
 </html>`;
 }
