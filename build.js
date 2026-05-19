@@ -43,18 +43,18 @@ function html(content){
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 ${content.meta}
-<link rel="stylesheet" href="/berty/css/main.css">
+<link rel="stylesheet" href="/css/main.css">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚔️</text></svg>">
 </head>
 <body>
 <nav class="nav">
   <div class="nav-inner">
-    <a href="/berty/" class="nav-logo"><span class="nav-logo-icon">⚔️</span><div><div class="nav-logo-title">TL Nexus</div><div class="nav-logo-sub">王权攻略站</div></div></a>
+    <a href="/" class="nav-logo"><span class="nav-logo-icon">⚔️</span><div><div class="nav-logo-title">TL Nexus</div><div class="nav-logo-sub">王权攻略站</div></div></a>
     <div class="nav-links">
-      <a href="/berty/" class="nav-link ${content.page==='home'?'active':''}">首页</a>
-      <a href="/berty/builds.html" class="nav-link ${content.page==='builds'?'active':''}">Build</a>
-      <a href="/berty/tierlist.html" class="nav-link ${content.page==='tier'?'active':''}">Tier排名</a>
-      <a href="/berty/weather.html" class="nav-link ${content.page==='weather'?'active':''}">天气</a>
+      <a href="/" class="nav-link ${content.page==='home'?'active':''}">首页</a>
+      <a href="/builds.html" class="nav-link ${content.page==='builds'?'active':''}">Build</a>
+      <a href="/tierlist.html" class="nav-link ${content.page==='tier'?'active':''}">Tier排名</a>
+      <a href="/weather.html" class="nav-link ${content.page==='weather'?'active':''}">天气</a>
     </div>
   </div>
 </nav>
@@ -64,14 +64,16 @@ ${content.meta}
 </html>`;
 }
 
+const BASE = 'https://berty.gamewayz.com';
+
 function meta(title, desc, url){
   return `<title>${title}</title>
 <meta name="description" content="${desc}">
 <meta property="og:title" content="${title}">
 <meta property="og:description" content="${desc}">
-<meta property="og:url" content="https://ro3.gamewayz.com${url}">
+<meta property="og:url" content="${BASE}${url}">
 <meta property="og:type" content="website">
-<link rel="canonical" href="https://ro3.gamewayz.com${url}">`;
+<link rel="canonical" href="${BASE}${url}">`;
 }
 
 // ─── Homepage ───
@@ -85,7 +87,7 @@ const homeBody = `
 <div class="section-header">🔥 推荐 Build <span class="dim">— 当前版本强势流派</span></div>
 <div class="build-grid">
   ${BUILDS.sort((a,b)=>a.tier.localeCompare(b.tier)).map(b => `
-    <a href="/berty/build/${b.slug}.html" class="build-card">
+    <a href="/build/${b.slug}.html" class="build-card">
       <div class="build-header">
         <div class="build-weapons">${b.comboName}</div>
         <span class="tag tag-${b.tier.toLowerCase()}">Tier ${b.tier}</span>
@@ -108,7 +110,7 @@ const homeBody = `
 
 fs.writeFileSync(path.join(DIST, 'index.html'), html({
   page:'home',
-  meta: meta('TL Nexus — 王权与自由中文攻略站', '王权与自由中文攻略站 · Build指南、Tier排名、天气策略', '/berty/'),
+  meta: meta('TL Nexus — 王权与自由中文攻略站', '王权与自由中文攻略站 · Build指南、Tier排名、天气策略', '/'),
   body: homeBody
 }));
 
@@ -134,7 +136,7 @@ BUILDS.forEach(b => {
 
   const body = `
 <div class="bd-page">
-  <a href="/berty/builds.html" class="back-link">← 返回Build列表</a>
+  <a href="/builds.html" class="back-link">← 返回Build列表</a>
   <div class="bd-header">
     <div>
       <div class="bd-title">${b.comboName}</div>
@@ -181,7 +183,7 @@ BUILDS.forEach(b => {
 
   fs.writeFileSync(path.join(DIST, 'build', `${b.slug}.html`), html({
     page:'build',
-    meta: meta(`${b.comboName} — TL Nexus Build攻略`, `${b.role} · Tier ${b.tier} · ${b.summary.slice(0,100)}`, `/berty/build/${b.slug}.html`),
+    meta: meta(`${b.comboName} — TL Nexus Build攻略`, `${b.role} · Tier ${b.tier} · ${b.summary.slice(0,100)}`, `/build/${b.slug}.html`),
     body
   }));
 });
@@ -191,7 +193,7 @@ const buildsBody = `
 <div class="section-header">⚔️ 全部Build <span class="dim">— ${BUILDS.length}个流派</span></div>
 <div class="build-grid">
   ${BUILDS.map(b => `
-    <a href="/berty/build/${b.slug}.html" class="build-card">
+    <a href="/build/${b.slug}.html" class="build-card">
       <div class="build-header">
         <div class="build-weapons">${b.comboName}</div>
         <span class="tag tag-${b.tier.toLowerCase()}">Tier ${b.tier}</span>
@@ -204,7 +206,7 @@ const buildsBody = `
 
 fs.writeFileSync(path.join(DIST, 'builds.html'), html({
   page:'builds',
-  meta: meta('全部Build — TL Nexus', '王权与自由全流派Build攻略，覆盖所有武器组合', '/berty/builds.html'),
+  meta: meta('全部Build — TL Nexus', '王权与自由全流派Build攻略，覆盖所有武器组合', '/builds.html'),
   body: buildsBody
 }));
 
@@ -219,7 +221,7 @@ ${Object.entries(tiers).map(([t, label]) => {
   <div class="tier-row">
     <div class="tier-label tier-${t.toLowerCase()}">${t} — ${label}</div>
     ${builds.map(b => `
-      <a href="/berty/build/${b.slug}.html" class="tier-item">
+      <a href="/build/${b.slug}.html" class="tier-item">
         <div class="tier-info">
           <div class="tier-weapons">${b.comboName}</div>
           <div class="tier-role">${b.role} · 操作${b.difficulty}</div>
@@ -231,7 +233,7 @@ ${Object.entries(tiers).map(([t, label]) => {
 
 fs.writeFileSync(path.join(DIST, 'tierlist.html'), html({
   page:'tier',
-  meta: meta('Tier排名 — TL Nexus', '王权与自由Build Tier排名，S/A/B分级', '/berty/tierlist.html'),
+  meta: meta('Tier排名 — TL Nexus', '王权与自由Build Tier排名，S/A/B分级', '/tierlist.html'),
   body: tierBody
 }));
 
@@ -281,24 +283,24 @@ const weatherBody = `
 
 fs.writeFileSync(path.join(DIST, 'weather.html'), html({
   page:'weather',
-  meta: meta('实时天气 — TL Nexus', '王权与自由实时天气查询，美服/欧服/韩服/日服', '/berty/weather.html'),
+  meta: meta('实时天气 — TL Nexus', '王权与自由实时天气查询，美服/欧服/韩服/日服', '/weather.html'),
   body: weatherBody
 }));
 
 // ─── Sitemap ───
 const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://ro3.gamewayz.com/berty/</loc><priority>1.0</priority></url>
-  <url><loc>https://ro3.gamewayz.com/berty/builds.html</loc><priority>0.9</priority></url>
-  <url><loc>https://ro3.gamewayz.com/berty/tierlist.html</loc><priority>0.9</priority></url>
-  <url><loc>https://ro3.gamewayz.com/berty/weather.html</loc><priority>0.8</priority></url>
-  ${BUILDS.map(b => `<url><loc>https://ro3.gamewayz.com/berty/build/${b.slug}.html</loc><priority>0.7</priority></url>`).join('\n  ')}
+  <url><loc>https://berty.gamewayz.com/</loc><priority>1.0</priority></url>
+  <url><loc>https://berty.gamewayz.com/builds.html</loc><priority>0.9</priority></url>
+  <url><loc>https://berty.gamewayz.com/tierlist.html</loc><priority>0.9</priority></url>
+  <url><loc>https://berty.gamewayz.com/weather.html</loc><priority>0.8</priority></url>
+  ${BUILDS.map(b => `<url><loc>https://berty.gamewayz.com/build/${b.slug}.html</loc><priority>0.7</priority></url>`).join('\n  ')}
 </urlset>`;
 
 fs.writeFileSync(path.join(DIST, 'sitemap.xml'), sitemap);
 
 // ─── robots.txt ───
-fs.writeFileSync(path.join(DIST, 'robots.txt'), `User-agent: *\nAllow: /\nSitemap: https://ro3.gamewayz.com/berty/sitemap.xml`);
+fs.writeFileSync(path.join(DIST, 'robots.txt'), `User-agent: *\nAllow: /\nSitemap: https://berty.gamewayz.com/sitemap.xml`);
 
 console.log(`✅ Generated ${BUILDS.length} build pages + index, builds, tierlist, weather, sitemap`);
 console.log(`📁 Output: ${DIST}`);
