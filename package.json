@@ -1,0 +1,9 @@
+{
+  "name": "tl-nexus",
+  "version": "1.0.0",
+  "description": "王权与自由 - 战术枢纽",
+  "scripts": {
+    "dev": "npx serve . -p 3000 -L",
+    "start": "npx serve . -p 3000"
+  }
+}

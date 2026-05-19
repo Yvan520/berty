@@ -1,0 +1,519 @@
+/* ============================================
+   TL Nexus — Design System
+   ============================================ */
+
+/* ─── Reset ─── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+/* ─── Variables ─── */
+:root{
+  --bg:#0b0418;
+  --bg2:#140a28;
+  --surface:rgba(26,14,48,.85);
+  --surface-hover:rgba(40,22,72,.85);
+  --border:rgba(108,74,182,.2);
+  --border-hover:rgba(108,74,182,.45);
+  --purple:#7c5cbf;
+  --purple-light:#a68aee;
+  --purple-glow:rgba(124,92,191,.3);
+  --gold:#f0b060;
+  --gold-light:#fce4b0;
+  --gold-glow:rgba(240,176,96,.3);
+  --text:#e8e0f0;
+  --text-dim:#9888b0;
+  --text-muted:#605070;
+  --rain:#5b8dd9;
+  --thunder:#d94b4b;
+  --fog:#8a9ba8;
+  --sun:#e8a830;
+  --snow:#7ec8e3;
+  --success:#4cd98b;
+  --radius:14px;
+  --radius-sm:10px;
+  --shadow:0 4px 32px rgba(0,0,0,.5);
+  --font-sans:-apple-system,'Segoe UI','PingFang SC','Microsoft YaHei',system-ui,sans-serif;
+  --font-mono:'SF Mono','Cascadia Code','Menlo',monospace;
+  --transition:.2s ease
+}
+
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--font-sans);
+  background:var(--bg);
+  color:var(--text);
+  min-height:100vh;
+  line-height:1.5
+}
+a{color:inherit;text-decoration:none}
+
+/* ─── Nav ─── */
+.nav{
+  position:sticky;top:0;z-index:100;
+  background:rgba(11,4,24,.92);
+  backdrop-filter:blur(16px);
+  -webkit-backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--border)
+}
+.nav-inner{
+  max-width:1100px;margin:0 auto;
+  display:flex;align-items:center;
+  padding:0 16px;height:60px;gap:32px
+}
+.nav-logo{display:flex;align-items:center;gap:10px;flex-shrink:0}
+.nav-logo-icon{
+  width:34px;height:34px;
+  background:linear-gradient(135deg,var(--purple),var(--purple-light));
+  border-radius:8px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.1rem
+}
+.nav-logo-title{font-size:1.05rem;font-weight:700;letter-spacing:-.02em;line-height:1.2}
+.nav-logo-sub{font-size:.6rem;color:var(--text-dim);letter-spacing:.04em;line-height:1}
+.nav-links{display:flex;gap:4px;flex:1}
+.nav-link{
+  padding:8px 16px;border-radius:8px;
+  font-size:.88rem;font-weight:500;color:var(--text-dim);
+  transition:all var(--transition)
+}
+.nav-link:hover{color:var(--text);background:var(--surface)}
+.nav-link.active{color:var(--purple-light);background:rgba(124,92,191,.12)}
+.nav-toggle{display:none;background:none;border:none;color:var(--text);font-size:1.4rem;cursor:pointer;padding:4px 8px;border-radius:6px}
+.nav-toggle:hover{background:var(--surface)}
+
+/* ─── View Container ─── */
+.view{
+  max-width:1100px;margin:0 auto;padding:24px 16px 60px
+}
+.view-enter{animation:viewIn .3s ease both}
+@keyframes viewIn{
+  from{opacity:0;transform:translateY(12px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+/* ─── Hero ─── */
+.hero{text-align:center;padding:48px 0 32px}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:6px;
+  background:rgba(124,92,191,.12);
+  border:1px solid rgba(124,92,191,.25);
+  border-radius:20px;
+  padding:4px 14px;
+  font-size:.75rem;color:var(--purple-light);
+  margin-bottom:16px
+}
+.hero h1{
+  font-size:clamp(32px,7vw,48px);font-weight:800;
+  line-height:1.15;letter-spacing:-.03em;
+  background:linear-gradient(135deg,var(--purple-light),var(--gold));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text
+}
+.hero p{
+  color:var(--text-dim);font-size:clamp(15px,2.5vw,18px);
+  margin-top:12px;max-width:520px;margin-left:auto;margin-right:auto
+}
+
+/* ─── Glass Card ─── */
+.card{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:20px 24px;
+  transition:all var(--transition)
+}
+.card-hover{cursor:default}
+.card-hover:hover{border-color:var(--border-hover);background:var(--surface-hover)}
+.card-glow:hover{box-shadow:0 0 24px var(--purple-glow)}
+
+/* ─── Stats ─── */
+.stat-row{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(140px,1fr))}
+.stat-card{
+  background:rgba(11,4,24,.5);
+  border:1px solid var(--border);
+  border-radius:var(--radius-sm);
+  padding:16px;text-align:center
+}
+.stat-number{
+  font-size:clamp(22px,3vw,32px);font-weight:800;
+  background:linear-gradient(135deg,var(--gold),var(--gold-light));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text
+}
+.stat-label{font-size:.78rem;color:var(--text-dim);margin-top:2px}
+
+/* ─── Weather Card ─── */
+.weather-banner{
+  border-radius:var(--radius);padding:24px;
+  position:relative;overflow:hidden;
+  box-shadow:var(--shadow)
+}
+.weather-banner.thunder{background:linear-gradient(135deg,rgba(217,75,75,.2),rgba(217,75,75,.05));border:1px solid rgba(217,75,75,.3)}
+.weather-banner.rain{background:linear-gradient(135deg,rgba(91,141,217,.2),rgba(91,141,217,.05));border:1px solid rgba(91,141,217,.3)}
+.weather-banner.fog{background:linear-gradient(135deg,rgba(138,155,168,.2),rgba(138,155,168,.05));border:1px solid rgba(138,155,168,.3)}
+.weather-banner.sun{background:linear-gradient(135deg,rgba(232,168,48,.2),rgba(232,168,48,.05));border:1px solid rgba(232,168,48,.3)}
+.weather-banner.snow{background:linear-gradient(135deg,rgba(126,200,227,.2),rgba(126,200,227,.05));border:1px solid rgba(126,200,227,.3)}
+.weather-row{display:flex;align-items:center;gap:16px}
+.weather-emoji{font-size:44px;line-height:1}
+.weather-info{flex:1}
+.weather-name{font-size:20px;font-weight:700}
+.weather-effect{font-size:13px;color:var(--gold-light);margin-top:2px}
+.weather-timer{text-align:right;flex-shrink:0}
+.weather-timer .num{font-size:30px;font-weight:800;font-variant-numeric:tabular-nums}
+.weather-timer .lbl{font-size:11px;color:var(--text-muted);margin-top:1px}
+
+/* ─── Section ─── */
+.section-header{
+  display:flex;align-items:center;gap:8px;
+  font-size:.8rem;font-weight:600;color:var(--text-dim);
+  text-transform:uppercase;letter-spacing:.06em;
+  margin:32px 0 14px
+}
+.section-header::after{content:'';flex:1;height:1px;background:var(--border)}
+
+/* ─── Build Cards ─── */
+.build-grid{display:grid;gap:10px}
+.build-card{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:16px 18px;cursor:pointer;
+  transition:all var(--transition);
+  position:relative;
+  overflow:hidden
+}
+.build-card:hover{border-color:var(--border-hover);transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.3)}
+.build-card:active{transform:translateY(0)}
+.build-card .weather-strip{
+  position:absolute;top:0;left:0;width:4px;height:100%
+}
+.build-card .weather-strip.thunder{background:var(--thunder)}
+.build-card .weather-strip.rain{background:var(--rain)}
+.build-card .weather-strip.fog{background:var(--fog)}
+.build-card .weather-strip.sun{background:var(--sun)}
+.build-card .weather-strip.snow{background:var(--snow)}
+
+.build-weapons{font-size:16px;font-weight:700;margin-bottom:4px;padding-left:8px}
+.build-combo{
+  font-size:12px;color:var(--gold-light);
+  background:rgba(240,176,96,.08);
+  border-radius:6px;padding:6px 10px;
+  display:inline-block;font-family:var(--font-mono);
+  margin-bottom:6px;margin-left:8px
+}
+.build-tip{font-size:13px;color:var(--text-dim);line-height:1.6;padding-left:8px}
+.build-meta{
+  display:flex;align-items:center;gap:8px;
+  margin-top:6px;font-size:11px;color:var(--text-muted);padding-left:8px
+}
+.build-verified{
+  display:inline-flex;align-items:center;gap:3px;
+  background:rgba(76,217,139,.12);
+  color:var(--success);padding:2px 8px;
+  border-radius:4px;font-size:10px;font-weight:600
+}
+
+/* ─── Buttons ─── */
+.btn{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:10px 24px;border:none;border-radius:var(--radius-sm);
+  font-size:14px;font-weight:600;cursor:pointer;
+  transition:all var(--transition);
+  text-decoration:none;
+  font-family:var(--font-sans)
+}
+.btn-primary{background:linear-gradient(135deg,var(--purple),var(--purple-light));color:#fff}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 24px var(--purple-glow)}
+.btn-gold{background:linear-gradient(135deg,var(--gold),var(--gold-light));color:#140a28}
+.btn-gold:hover{transform:translateY(-2px);box-shadow:0 8px 24px var(--gold-glow)}
+.btn-sm{padding:6px 14px;font-size:12px;border-radius:6px}
+
+/* ─── Server Select ─── */
+select{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:var(--radius-sm);
+  padding:12px 40px 12px 16px;
+  color:var(--text);font-size:15px;font-weight:500;
+  font-family:var(--font-sans);
+  -webkit-appearance:none;appearance:none;cursor:pointer;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='8' viewBox='0 0 14 8'%3E%3Cpath fill='%23a68aee' d='M1 1l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;
+  background-position:right 12px center;
+  width:100%;max-width:360px;
+  transition:border-color var(--transition)
+}
+select:focus{outline:none;border-color:var(--purple)}
+
+/* ─── Cycle Bar ─── */
+.cycle-grid{display:flex;gap:6px;margin:14px 0}
+.cycle-item{
+  flex:1;padding:10px 4px;text-align:center;
+  border-radius:var(--radius-sm);
+  font-size:12px;font-weight:600;
+  transition:all var(--transition);
+  border:1px solid transparent;
+  background:rgba(124,92,191,.06)
+}
+.cycle-item.active{
+  border-color:var(--gold);
+  color:var(--gold);
+  background:rgba(240,176,96,.08);
+  box-shadow:0 0 16px var(--gold-glow)
+}
+.cycle-item .emoji{display:block;font-size:20px;margin-bottom:2px}
+
+/* ─── Lab ─── */
+.lab-layout{display:grid;gap:20px;grid-template-columns:340px 1fr}
+.lab-config{position:sticky;top:84px;align-self:start}
+.lab-section{margin-bottom:20px}
+.lab-label{font-size:.78rem;font-weight:600;color:var(--text-dim);margin-bottom:8px;text-transform:uppercase;letter-spacing:.04em}
+.weapon-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.weapon-btn{
+  background:rgba(11,4,24,.6);
+  border:2px solid var(--border);
+  border-radius:var(--radius-sm);
+  padding:12px 8px;cursor:pointer;
+  text-align:center;
+  transition:all var(--transition);
+  font-family:var(--font-sans);color:var(--text)
+}
+.weapon-btn:hover{border-color:var(--border-hover);background:var(--surface)}
+.weapon-btn.selected{border-color:var(--gold);background:rgba(240,176,96,.1)}
+.weapon-btn .icon{font-size:28px;display:block;margin-bottom:3px}
+.weapon-btn .name{font-size:12px;font-weight:600}
+.pill-grid{display:flex;flex-wrap:wrap;gap:6px}
+.pill-btn{
+  padding:8px 16px;border-radius:20px;
+  border:1px solid var(--border);
+  background:rgba(11,4,24,.5);
+  color:var(--text-dim);font-size:13px;font-weight:500;
+  cursor:pointer;transition:all var(--transition);
+  font-family:var(--font-sans)
+}
+.pill-btn:hover{border-color:var(--border-hover);color:var(--text)}
+.pill-btn.selected{background:rgba(240,176,96,.12);border-color:var(--gold);color:var(--gold)}
+
+/* Lab Results */
+.lab-empty{
+  text-align:center;padding:80px 24px;color:var(--text-dim)
+}
+.lab-empty .icon{font-size:56px;margin-bottom:12px}
+.lab-empty h3{font-size:20px;color:var(--purple-light);margin-bottom:6px}
+.lab-results{display:grid;gap:16px}
+.result-rating{
+  display:flex;align-items:center;gap:12px;flex-wrap:wrap
+}
+.result-score{
+  font-size:40px;font-weight:800;color:var(--gold)
+}
+.result-label{font-size:.8rem;color:var(--text-dim)}
+.stat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px}
+.stat-box{text-align:center;padding:12px;background:rgba(11,4,24,.5);border-radius:var(--radius-sm)}
+.stat-box .val{font-size:22px;font-weight:700;color:var(--gold)}
+.stat-box .lbl{font-size:11px;color:var(--text-dim);margin-top:2px}
+.skill-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px}
+.skill-card{
+  background:rgba(11,4,24,.5);
+  border:1px solid var(--border);
+  border-radius:var(--radius-sm);
+  padding:12px;text-align:center;position:relative;transition:all var(--transition)
+}
+.skill-card:hover{border-color:var(--border-hover)}
+.skill-card .num{
+  position:absolute;top:-8px;left:-8px;width:22px;height:22px;
+  background:var(--purple);border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:11px;font-weight:700;color:#fff
+}
+.skill-card .icon{font-size:28px;display:block;margin-bottom:4px}
+.skill-card .name{font-size:12px;font-weight:600}
+.skill-card .cd{font-size:10px;color:var(--text-muted);margin-top:2px}
+.tip-box{
+  padding:14px 16px;border-radius:var(--radius-sm);
+  font-size:13px;line-height:1.7;
+  border-left:3px solid
+}
+.tip-box.green{background:rgba(76,217,139,.08);border-color:var(--success);color:var(--success)}
+.tip-box.red{background:rgba(217,75,75,.08);border-color:var(--thunder);color:var(--thunder)}
+.tip-box.gold{background:rgba(240,176,96,.08);border-color:var(--gold);color:var(--gold-light)}
+
+/* ─── Weather Center ─── */
+.server-list{display:grid;gap:12px}
+.server-card-compact{
+  display:flex;align-items:center;gap:16px;
+  padding:16px 20px;
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  transition:all var(--transition)
+}
+.server-card-compact:hover{border-color:var(--border-hover);background:var(--surface-hover)}
+.server-card-compact .flag{font-size:24px}
+.server-card-compact .info{flex:1}
+.server-card-compact .srv-name{font-weight:600;font-size:14px}
+.server-card-compact .srv-time{font-size:12px;color:var(--text-dim);margin-top:1px}
+.server-card-compact .weather-badge{
+  display:flex;align-items:center;gap:6px;
+  padding:6px 14px;border-radius:20px;
+  font-size:13px;font-weight:600
+}
+.server-card-compact .weather-badge.thunder{background:rgba(217,75,75,.15);color:var(--thunder)}
+.server-card-compact .weather-badge.rain{background:rgba(91,141,217,.15);color:var(--rain)}
+.server-card-compact .weather-badge.fog{background:rgba(138,155,168,.15);color:var(--fog)}
+.server-card-compact .weather-badge.sun{background:rgba(232,168,48,.15);color:var(--sun)}
+.server-card-compact .weather-badge.snow{background:rgba(126,200,227,.15);color:var(--snow)}
+
+/* ─── Build Detail Overlay ─── */
+.detail-overlay{
+  position:fixed;inset:0;z-index:200;
+  background:rgba(0,0,0,.7);
+  backdrop-filter:blur(4px);
+  display:flex;align-items:center;justify-content:center;
+  padding:24px;animation:fadeIn .2s ease
+}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.detail-panel{
+  background:var(--bg2);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  max-width:640px;width:100%;max-height:90vh;overflow-y:auto;
+  padding:28px 32px;
+  animation:slideUp .25s ease
+}
+@keyframes slideUp{from{transform:translateY(30px);opacity:0}to{transform:translateY(0);opacity:1}}
+.detail-close{
+  float:right;background:none;border:none;
+  color:var(--text-dim);font-size:24px;cursor:pointer;
+  transition:color var(--transition)
+}
+.detail-close:hover{color:var(--text)}
+
+/* ─── Footer ─── */
+.footer{
+  border-top:1px solid var(--border);
+  background:rgba(11,4,24,.6);
+  margin-top:40px
+}
+.footer-inner{
+  max-width:1100px;margin:0 auto;
+  padding:20px 16px;
+  display:flex;justify-content:space-between;align-items:center;
+  font-size:12px;color:var(--text-muted)
+}
+.footer-links{display:flex;gap:16px}
+.footer-links a{color:var(--text-dim);transition:color var(--transition)}
+.footer-links a:hover{color:var(--text)}
+
+/* ─── Toast ─── */
+.toast{
+  position:fixed;bottom:24px;left:50%;
+  transform:translateX(-50%) translateY(80px);
+  background:var(--surface);
+  border:1px solid var(--border-hover);
+  border-radius:var(--radius-sm);
+  padding:10px 20px;font-size:13px;
+  opacity:0;transition:all .35s ease;
+  pointer-events:none;white-space:nowrap;z-index:300;
+  backdrop-filter:blur(8px)
+}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* ─── Empty State ─── */
+.empty-state{text-align:center;padding:48px 16px;color:var(--text-dim)}
+.empty-state .e{font-size:40px;margin-bottom:8px}
+.empty-state .sub{font-size:12px;color:var(--text-muted);margin-top:4px}
+
+/* ─── Responsive ─── */
+@media(max-width:768px){
+  .nav-links{display:none}
+  .nav-links.open{display:flex;flex-direction:column;position:absolute;top:60px;left:0;right:0;background:rgba(11,4,24,.97);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:8px}
+  .nav-toggle{display:block}
+  .lab-layout{grid-template-columns:1fr}
+  .lab-config{position:static}
+  .weather-row{flex-wrap:wrap;gap:10px}
+  .weather-timer{text-align:left;width:100%;display:flex;align-items:baseline;gap:6px;padding-top:4px}
+  .weather-timer .num{font-size:22px}
+  .weather-banner{padding:18px}
+  .detail-panel{padding:20px}
+  .hero{padding:32px 0 20px}
+  .stat-grid{grid-template-columns:1fr 1fr}
+}
+
+/* ─── Animations ─── */
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes slideUp{from{transform:translateY(30px);opacity:0}to{transform:translateY(0);opacity:1}}
+@keyframes scaleIn{from{transform:scale(.95);opacity:0}to{transform:scale(1);opacity:1}}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
+@keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+@keyframes glowPulse{0%,100%{box-shadow:0 0 8px var(--purple-glow)}50%{box-shadow:0 0 24px var(--purple-glow)}}
+
+.anim-fade-up{animation:fadeUp .35s ease both}
+.anim-fade-in{animation:fadeIn .25s ease both}
+.anim-slide-up{animation:slideUp .3s ease both}
+.anim-scale-in{animation:scaleIn .25s ease both}
+.anim-delay-1{animation-delay:.05s}
+.anim-delay-2{animation-delay:.1s}
+.anim-delay-3{animation-delay:.15s}
+.anim-delay-4{animation-delay:.2s}
+
+/* Hero gradient glow */
+.hero-glow{
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  width:600px;height:600px;
+  background:radial-gradient(circle,rgba(124,92,191,.08) 0%,transparent 70%);
+  pointer-events:none;
+  animation:pulse 4s ease-in-out infinite
+}
+
+/* Weather banner animation */
+.weather-banner{animation:scaleIn .3s ease both}
+.weather-banner .weather-emoji{animation:fadeUp .4s ease .1s both}
+.weather-banner .weather-info{animation:fadeUp .4s ease .15s both}
+.weather-banner .weather-timer{animation:fadeUp .4s ease .2s both}
+
+/* Build card staggered animation */
+.build-card:nth-child(1){animation:fadeUp .35s ease .05s both}
+.build-card:nth-child(2){animation:fadeUp .35s ease .1s both}
+.build-card:nth-child(3){animation:fadeUp .35s ease .15s both}
+.build-card:nth-child(4){animation:fadeUp .35s ease .2s both}
+.build-card:nth-child(5){animation:fadeUp .35s ease .25s both}
+.build-card:nth-child(6){animation:fadeUp .35s ease .3s both}
+
+/* Server card staggered */
+.server-card-compact:nth-child(1){animation:fadeUp .3s ease .03s both}
+.server-card-compact:nth-child(2){animation:fadeUp .3s ease .06s both}
+.server-card-compact:nth-child(3){animation:fadeUp .3s ease .09s both}
+.server-card-compact:nth-child(4){animation:fadeUp .3s ease .12s both}
+.server-card-compact:nth-child(5){animation:fadeUp .3s ease .15s both}
+.server-card-compact:nth-child(6){animation:fadeUp .3s ease .18s both}
+.server-card-compact:nth-child(7){animation:fadeUp .3s ease .21s both}
+
+/* Stat card staggered */
+.stat-card:nth-child(1){animation:fadeUp .3s ease .05s both}
+.stat-card:nth-child(2){animation:fadeUp .3s ease .1s both}
+.stat-card:nth-child(3){animation:fadeUp .3s ease .15s both}
+.stat-card:nth-child(4){animation:fadeUp .3s ease .2s both}
+
+/* Nav link active indicator */
+.nav-link.active{position:relative}
+.nav-link.active::after{
+  content:'';position:absolute;bottom:2px;left:50%;transform:translateX(-50%);
+  width:16px;height:2px;border-radius:1px;
+  background:var(--purple-light);
+  animation:fadeIn .2s ease
+}
+
+/* Button click feedback */
+.btn:active{transform:scale(.97)!important}
+
+/* Cycle item animation */
+.cycle-item{transition:all .3s ease}
+.cycle-item:not(.active):hover{border-color:var(--border-hover);background:rgba(124,92,191,.1)}
+
+/* Smooth card entrance */
+.lab-results .card:nth-child(1){animation:slideUp .35s ease both}
+.lab-results .card:nth-child(2){animation:slideUp .35s ease .1s both}
+.lab-results .card:nth-child(3){animation:slideUp .35s ease .2s both}
