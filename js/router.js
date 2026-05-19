@@ -1,7 +1,6 @@
 // ─── TL Nexus Router ───
 window.TL = window.TL || {};
 
-// Global cleanup — clears all registered intervals when switching views
 TL.cleanup = function(){
   if(TL.Views && TL.Views._intervals){
     TL.Views._intervals.forEach(id=>clearInterval(id));
@@ -14,9 +13,7 @@ TL.Router = {
   views: {},
   navLinks: null,
 
-  register(name, renderFn){
-    this.views[name]=renderFn;
-  },
+  register(name, fn){this.views[name]=fn},
 
   init(){
     this.navLinks=document.querySelectorAll('[data-nav]');
@@ -30,39 +27,34 @@ TL.Router = {
     const path=parts[0];
     const params=Object.fromEntries(new URLSearchParams(parts[1]||''));
     let view;
-
     if(path==='/')view='home';
+    else if(path==='/builds')view='builds';
+    else if(path==='/build')view='build';
+    else if(path==='/tierlist')view='tierlist';
     else if(path==='/lab')view='lab';
     else if(path==='/weather')view='weather';
-    else if(path==='/build')view='build';
     else view='home';
-
     this.render(view,params);
   },
 
   render(name, params){
     if(this.currentView===name)return;
-    // Cleanup previous view
     if(typeof TL.cleanup==='function')TL.cleanup();
     this.currentView=name;
     const container=document.getElementById('view');
     const fn=this.views[name];
     if(!fn){container.innerHTML='<div class="view"><div class="empty-state"><div class="e">404</div><p>页面不存在</p></div></div>';return}
-
-    container.innerHTML='<div class="view view-enter"></div>';
+    container.innerHTML='<div class="view"></div>';
     const viewEl=container.querySelector('.view');
     fn(viewEl,params);
-
     this.navLinks.forEach(link=>{
-      link.classList.toggle('active',link.getAttribute('href')==='#/'+name||(name==='home'&&link.getAttribute('href')==='#/'));
+      const href=link.getAttribute('href')||'';
+      const isActive=href==='#/'+name||(name==='home'&&href==='#/');
+      link.classList.toggle('active',isActive);
     });
-
-    // Close mobile nav
     const mobileNav=document.getElementById('navLinks');
-    mobileNav.classList.remove('open');
+    if(mobileNav)mobileNav.classList.remove('open');
   },
 
-  navigate(path){
-    window.location.hash='#'+path;
-  }
+  navigate(path){window.location.hash='#'+path}
 };

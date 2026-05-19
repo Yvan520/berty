@@ -3,39 +3,82 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TL Nexus - 王权与自由 战术枢纽</title>
-<link rel="stylesheet" href="css/main.css">
+<title>TL Nexus - 王权与自由 攻略站</title>
+<meta name="description" content="王权与自由中文攻略站 - Build 指南、Tier 排名、天气策略">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚔️</text></svg>">
+<link rel="stylesheet" href="css/main.css">
 </head>
 <body>
 
 <div id="app">
+  <!-- Nav -->
   <nav class="nav" id="navbar">
     <div class="nav-inner">
       <a href="#/" class="nav-logo" data-nav>
         <span class="nav-logo-icon">⚔️</span>
         <div>
           <div class="nav-logo-title">TL Nexus</div>
-          <div class="nav-logo-sub">王权战术枢纽</div>
+          <div class="nav-logo-sub">王权攻略站</div>
         </div>
       </a>
       <div class="nav-links" id="navLinks">
-        <a href="#/" class="nav-link" data-nav>首页</a>
-        <a href="#/lab" class="nav-link" data-nav>战术实验室</a>
-        <a href="#/weather" class="nav-link" data-nav>气象中心</a>
+        <a href="#/" class="nav-link active" data-nav>首页</a>
+        <a href="#/builds" class="nav-link" data-nav>Build</a>
+        <a href="#/tierlist" class="nav-link" data-nav>Tier排名</a>
+        <a href="#/lab" class="nav-link" data-nav>模拟器</a>
+        <a href="#/weather" class="nav-link" data-nav>天气</a>
       </div>
       <button class="nav-toggle" id="navToggle" aria-label="菜单">☰</button>
     </div>
   </nav>
 
-  <main id="view"></main>
+  <!-- Layout with sidebar -->
+  <div class="layout">
+    <!-- Main content -->
+    <main class="main" id="view"></main>
+
+    <!-- Global weather sidebar -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-card">
+        <div class="sidebar-title">☁️ 实时天气</div>
+        <select id="sidebarServer" onchange="renderSidebarWeather()">
+          <option value="美洲 - Throne Peak">🇺🇸 美服</option>
+          <option value="欧洲 - Castle Dawn">🇪🇺 欧服</option>
+          <option value="韩国 - Dragon Valley">🇰🇷 韩服</option>
+          <option value="日本 - Sakura Realm">🇯🇵 日服</option>
+        </select>
+        <div id="sidebarWeather" style="margin-top:10px;font-size:13px">
+          <div style="display:flex;align-items:center;gap:10px;padding:10px 0">
+            <span id="sidebarEmoji" style="font-size:28px">☀️</span>
+            <div>
+              <div id="sidebarWeatherName" style="font-weight:600">晴天</div>
+              <div id="sidebarTimer" style="color:var(--text-dim);font-size:12px">--:--</div>
+            </div>
+          </div>
+          <div id="sidebarTip" style="font-size:11px;color:var(--gold-light);padding:8px 10px;background:rgba(240,176,96,.08);border-radius:6px;line-height:1.4">远程射程+10%，晴天适合风筝打法</div>
+        </div>
+      </div>
+      <div class="sidebar-card">
+        <div class="sidebar-title">🏆 S级 Build</div>
+        <div id="sidebarTopBuilds"></div>
+      </div>
+      <div class="sidebar-card">
+        <div class="sidebar-title">📢 最新</div>
+        <div style="font-size:12px;color:var(--text-dim);line-height:1.7">
+          <div>• T2装备更新指南</div>
+          <div>• 暴雪天气控制流崛起</div>
+          <div>• 公会战本周排行</div>
+        </div>
+      </div>
+    </aside>
+  </div>
 
   <footer class="footer">
     <div class="footer-inner">
-      <div>TL Nexus &middot; 非官方玩家社区</div>
+      <div>TL Nexus &middot; 王权与自由玩家攻略站</div>
       <div class="footer-links">
-        <a href="https://discord.gg" target="_blank" rel="noopener">Discord</a>
-        <a href="https://github.com" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://github.com/Yvan520/berty" target="_blank" rel="noopener">GitHub</a>
+        <a href="#" onclick="TL.UI.toast('Discord 频道筹备中')">Discord</a>
       </div>
     </div>
   </footer>
@@ -48,9 +91,11 @@
 <script src="js/router.js"></script>
 <script src="js/ui.js"></script>
 <script src="js/views/home.js"></script>
+<script src="js/views/build.js"></script>
+<script src="js/views/builds.js"></script>
+<script src="js/views/tierlist.js"></script>
 <script src="js/views/lab.js"></script>
 <script src="js/views/weather.js"></script>
-<script src="js/views/build-detail.js"></script>
 <script src="js/app.js"></script>
 </body>
 </html>
