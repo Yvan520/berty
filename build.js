@@ -89,10 +89,11 @@ const homeBody = `
   </h1>
   <p>国际服/亚服中文玩家攻略站 — Build指南 · Tier排名 · 天气策略 · 新手攻略</p>
   <div class="hero-features">
-    <span>12个流派Build</span>
+    <span>${BUILDS.length}个流派Build</span>
     <span>S/A/B Tier排名</span>
     <span>全球天气实时查询</span>
     <span>新手入坑攻略</span>
+    <span>${GUIDES.length}篇攻略</span>
     <span>2026最新版本</span>
   </div>
 </div>
