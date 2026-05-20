@@ -79,37 +79,72 @@ function meta(title, desc, url){
 <link rel="canonical" href="${BASE}${url}">`;
 }
 
+// ─── Helper: build card HTML ───
+function buildCardHTML(b){
+  const icons = b.weapons.map(id => {
+    const w = WEAPONS.find(x => x.id === id);
+    return w ? `<span class="build-card-icon">${w.icon}</span>` : '';
+  }).join('');
+  return `<a href="/build/${b.slug}.html" class="build-card">
+    <div class="build-card-left">
+      <div class="build-card-icons">${icons}</div>
+    </div>
+    <div class="build-card-info">
+      <div class="build-card-top">
+        <div class="build-card-name">${b.comboName}</div>
+        <span class="tag tag-${b.tier.toLowerCase()}">Tier ${b.tier}</span>
+      </div>
+      <div class="build-card-meta">${b.role} · 操作${b.difficulty}</div>
+      <div class="build-card-desc">${b.summary.slice(0,90)}…</div>
+    </div>
+    <div class="build-card-right">
+      <span class="build-card-role">${b.role}</span>
+    </div>
+  </a>`;
+}
+
 // ─── Homepage ───
 const wEmojis = Object.entries(WEATHER_EMOJI).map(([k,v]) => `${v} ${WEATHER_CN[k]}`).join(' · ');
 const homeBody = `
 <div class="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-glow2"></div>
   <div class="hero-badge">${wEmojis}</div>
   <h1>
     <span class="game">王权与自由</span>
     <span class="sub">THRONE AND LIBERTY</span>
   </h1>
-  <p>国际服/亚服中文玩家攻略站 — ${BUILDS.length}个Build · ${GUIDES.length}篇攻略 · Tier排名 · 天气策略</p>
-  <div class="hero-features">
-    <span>${BUILDS.length}个流派Build</span>
-    <span>S/A/B Tier排名</span>
-    <span>全球天气实时查询</span>
-    <span>新手入坑攻略</span>
-    <span>${GUIDES.length}篇攻略</span>
-    <span>2026最新版本</span>
+  <p class="hero-desc">国际服/亚服中文玩家攻略站</p>
+  <div class="hero-stats">
+    <div class="hero-stat">
+      <div class="hero-stat-num">${BUILDS.length}</div>
+      <div class="hero-stat-label">流派Build</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-num">${GUIDES.length}</div>
+      <div class="hero-stat-label">攻略</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-num">7</div>
+      <div class="hero-stat-label">服务器天气</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-num">S/A/B</div>
+      <div class="hero-stat-label">Tier排名</div>
+    </div>
+  </div>
+  <div class="wep-showcase">
+    ${WEAPONS.map(w => `
+      <div class="wep-show-item">
+        <span class="wep-show-icon">${w.icon}</span>
+        <span class="wep-show-name">${w.name}</span>
+      </div>
+    `).join('')}
   </div>
 </div>
-<div class="section-header">🔥 推荐 Build <span class="dim">— 当前版本强势流派</span></div>
+<div class="section-header">🔥 流派 Build <span class="dim">— 全部${BUILDS.length}个武器组合</span></div>
 <div class="build-grid">
-  ${BUILDS.sort((a,b)=>a.tier.localeCompare(b.tier)).map(b => `
-    <a href="/build/${b.slug}.html" class="build-card">
-      <div class="build-header">
-        <div class="build-weapons">${b.comboName}</div>
-        <span class="tag tag-${b.tier.toLowerCase()}">Tier ${b.tier}</span>
-      </div>
-      <div class="build-meta">${b.role} · 操作难度${b.difficulty}</div>
-      <div class="build-tip">${b.summary.slice(0,90)}…</div>
-    </a>
-  `).join('')}
+  ${BUILDS.sort((a,b)=>a.tier.localeCompare(b.tier)).map(b => buildCardHTML(b)).join('')}
 </div>
 <div class="section-header">⚔️ 武器一览</div>
 <div class="wep-grid">
@@ -215,16 +250,7 @@ BUILDS.forEach(b => {
 const buildsBody = `
 <div class="section-header">⚔️ 全部Build <span class="dim">— ${BUILDS.length}个流派</span></div>
 <div class="build-grid">
-  ${BUILDS.map(b => `
-    <a href="/build/${b.slug}.html" class="build-card">
-      <div class="build-header">
-        <div class="build-weapons">${b.comboName}</div>
-        <span class="tag tag-${b.tier.toLowerCase()}">Tier ${b.tier}</span>
-      </div>
-      <div class="build-meta">${b.role} · 操作${b.difficulty}</div>
-      <div class="build-tip">${b.summary.slice(0,90)}…</div>
-    </a>
-  `).join('')}
+  ${BUILDS.map(b => buildCardHTML(b)).join('')}
 </div>`;
 
 fs.writeFileSync(path.join(DIST, 'builds.html'), html({
@@ -234,25 +260,35 @@ fs.writeFileSync(path.join(DIST, 'builds.html'), html({
 }));
 
 // ─── Tier List ───
-const tiers = { S:'版本答案', A:'强势推荐', B:'可用' };
+const tiers = { S:'版本答案，当前版本最强势的组合', A:'强势推荐，版本优秀选择', B:'可用，特定场景或玩家' };
 const tierBody = `
 <div class="section-header">🏆 Tier排名 <span class="dim">— 当前版本综合表现</span></div>
+<div class="tier-list">
 ${Object.entries(tiers).map(([t, label]) => {
   const builds = BUILDS.filter(b => b.tier === t);
   if (!builds.length) return '';
   return `
-  <div class="tier-row">
-    <div class="tier-label tier-${t.toLowerCase()}">${t} — ${label}</div>
+<div class="tier-row">
+  <div class="tier-header">
+    <div class="tier-badge ${t.toLowerCase()}">${t}</div>
+    <div class="tier-info">
+      <div class="tier-label">Tier ${t}</div>
+      <div class="tier-desc">${label}</div>
+    </div>
+    <span class="tier-count">${builds.length}个流派</span>
+  </div>
+  <div class="tier-items">
     ${builds.map(b => `
-      <a href="/build/${b.slug}.html" class="tier-item">
-        <div class="tier-info">
-          <div class="tier-weapons">${b.comboName}</div>
-          <div class="tier-role">${b.role} · 操作${b.difficulty}</div>
-        </div>
-      </a>
+    <a href="/build/${b.slug}.html" class="tier-item">
+      <span class="tier-weapons">${b.comboName}</span>
+      <span class="tier-role">${b.role}</span>
+      <span class="tier-diff">操作${b.difficulty}</span>
+    </a>
     `).join('')}
-  </div>`;
-}).join('')}`;
+  </div>
+</div>`;
+}).join('')}
+</div>`;
 
 fs.writeFileSync(path.join(DIST, 'tierlist.html'), html({
   page:'tier',

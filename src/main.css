@@ -1,25 +1,26 @@
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 
 :root{
-  --bg:#0b0b12;
-  --bg-card:#11111d;
-  --bg-card-hover:#171729;
-  --border:rgba(255,255,255,.06);
-  --border-hover:rgba(255,255,255,.12);
-  --primary:#818cf8;
-  --primary-dim:rgba(129,140,248,.08);
+  --bg:#0a0a14;
+  --bg2:#10101e;
+  --bg3:#16162a;
+  --card:#121224;
+  --card-hover:#1a1a32;
+  --border:rgba(255,255,255,.05);
+  --border-hover:rgba(129,140,248,.15);
+  --primary:#7c8cf8;
+  --primary-dim:rgba(124,140,248,.08);
   --accent:#a78bfa;
   --gold:#e8c76a;
   --gold-dim:rgba(232,199,106,.06);
-  --text:#e8e4f0;
-  --text-dim:#8f8ba8;
-  --text-muted:#59567a;
+  --text:#e4e0f0;
+  --text-dim:#8a86a0;
+  --text-muted:#54526e;
   --success:#34d399;
   --danger:#f87171;
-  --radius:12px;
+  --radius:14px;
   --radius-sm:8px;
   --font:'Inter','Noto Sans SC','PingFang SC','Microsoft YaHei',system-ui,sans-serif;
-  --font-alt:'Noto Sans SC','PingFang SC','Microsoft YaHei',system-ui,sans-serif;
   --mono:'SF Mono','Fira Code','Menlo',monospace;
 }
 
@@ -30,9 +31,7 @@ body{
   color:var(--text);
   min-height:100vh;
   line-height:1.6;
-  background-image:
-    radial-gradient(ellipse 800px 500px at 50% -120px, rgba(129,140,248,.04), transparent),
-    radial-gradient(ellipse 500px 500px at 100% 500px, rgba(167,139,250,.02), transparent)
+  background-image:radial-gradient(ellipse 900px 600px at 50% -200px, rgba(124,140,248,.04), transparent)
 }
 a{color:inherit;text-decoration:none}
 ::selection{background:var(--primary);color:#fff}
@@ -40,7 +39,7 @@ a{color:inherit;text-decoration:none}
 /* ─── Nav ─── */
 .nav{
   position:sticky;top:0;z-index:100;
-  background:rgba(11,11,18,.92);
+  background:rgba(10,10,20,.92);
   backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
   border-bottom:1px solid var(--border)
 }
@@ -65,15 +64,45 @@ a{color:inherit;text-decoration:none}
 .nav-link.active{color:var(--primary);background:var(--primary-dim)}
 
 /* ─── Main ─── */
-.main{max-width:1080px;margin:0 auto;padding:36px 24px 56px}
+.main{max-width:1080px;margin:0 auto;padding:40px 24px 60px}
 
 /* ─── Hero ─── */
-.hero{text-align:center;padding:52px 0 40px}
-.hero h1{margin-bottom:6px}
+.hero{
+  text-align:center;
+  padding:64px 0 48px;
+  position:relative;
+  overflow:hidden;
+  border-radius:var(--radius);
+  background:linear-gradient(145deg,rgba(124,140,248,.06),rgba(167,139,250,.02));
+  border:1px solid var(--border);
+  margin-bottom:8px
+}
+.hero-glow{
+  position:absolute;top:-60%;left:50%;transform:translateX(-50%);
+  width:600px;height:400px;
+  background:radial-gradient(ellipse, rgba(124,140,248,.1), transparent 70%);
+  pointer-events:none
+}
+.hero-glow2{
+  position:absolute;bottom:-40%;right:-10%;
+  width:400px;height:300px;
+  background:radial-gradient(ellipse, rgba(167,139,250,.06), transparent 70%);
+  pointer-events:none
+}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:6px;
+  background:var(--primary-dim);
+  border-radius:20px;
+  padding:4px 14px;
+  font-size:.65rem;color:var(--accent);
+  margin-bottom:20px;
+  position:relative
+}
+.hero h1{position:relative}
 .hero .game{
   display:block;
-  font-size:clamp(34px,6vw,54px);font-weight:800;line-height:1.1;letter-spacing:-.03em;
-  background:linear-gradient(135deg,#e8e4f0 0%,var(--primary) 50%,var(--accent) 100%);
+  font-size:clamp(32px,6vw,52px);font-weight:800;line-height:1.1;letter-spacing:-.03em;
+  background:linear-gradient(135deg,#e4e0f0 0%,var(--primary) 50%,#a78bfa 100%);
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text
 }
 .hero .sub{
@@ -82,28 +111,31 @@ a{color:inherit;text-decoration:none}
   color:var(--text-dim);letter-spacing:.2em;text-transform:uppercase;
   margin-top:4px
 }
-.hero p{
+.hero-desc{
   color:var(--text-dim);
   font-size:clamp(13px,1.6vw,15px);
-  margin-top:14px;
-  max-width:520px;margin-left:auto;margin-right:auto;
-  line-height:1.6
+  margin-top:16px;
+  max-width:500px;margin-left:auto;margin-right:auto;
+  position:relative
 }
-.hero-features{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-top:20px}
-.hero-features span{
-  padding:5px 14px;
-  border-radius:6px;
-  font-size:.7rem;
-  color:var(--text-dim);
-  background:var(--primary-dim);
-  transition:all .15s
+.hero-stats{
+  display:flex;justify-content:center;gap:32px;flex-wrap:wrap;
+  margin-top:28px;position:relative
 }
-.hero-features span:hover{color:var(--primary);background:rgba(129,140,248,.12)}
+.hero-stat{
+  text-align:center
+}
+.hero-stat-num{
+  font-size:24px;font-weight:800;
+  background:linear-gradient(135deg,var(--primary),var(--accent));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text
+}
+.hero-stat-label{font-size:11px;color:var(--text-dim);margin-top:2px}
 
 /* ─── Section Header ─── */
 .section-header{
-  font-size:.88rem;font-weight:700;
-  margin:40px 0 18px;
+  font-size:.9rem;font-weight:700;
+  margin:48px 0 20px;
   display:flex;align-items:center;gap:10px;
   color:var(--text)
 }
@@ -113,6 +145,20 @@ a{color:inherit;text-decoration:none}
   background:linear-gradient(90deg,var(--border),transparent)
 }
 
+/* ─── Hero Weapon Showcase ─── */
+.wep-showcase{display:flex;justify-content:center;gap:6px;flex-wrap:wrap;margin-top:20px}
+.wep-show-item{
+  display:flex;flex-direction:column;align-items:center;
+  gap:4px;padding:10px 8px 6px;
+  background:var(--card);border:1px solid var(--border);
+  border-radius:var(--radius-sm);
+  width:68px;transition:all .15s
+}
+.wep-show-item:hover{border-color:var(--border-hover);background:var(--card-hover)}
+.wep-show-icon{font-size:20px}
+.wep-show-name{font-size:9px;color:var(--text-dim);text-align:center;line-height:1.2}
+.wep-show-label{font-size:7px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.05em}
+
 /* ─── Tags ─── */
 .tag{
   display:inline-flex;align-items:center;gap:3px;
@@ -120,57 +166,71 @@ a{color:inherit;text-decoration:none}
   font-size:10px;font-weight:700;letter-spacing:.04em
 }
 .tag-s{background:rgba(232,199,106,.1);color:var(--gold);border:1px solid rgba(232,199,106,.12)}
-.tag-a{background:rgba(129,140,248,.08);color:var(--primary);border:1px solid rgba(129,140,248,.1)}
-.tag-b{background:rgba(138,143,168,.06);color:var(--text-dim);border:1px solid rgba(138,143,168,.08)}
+.tag-a{background:rgba(124,140,248,.08);color:var(--primary);border:1px solid rgba(124,140,248,.1)}
+.tag-b{background:rgba(138,134,160,.06);color:var(--text-dim);border:1px solid rgba(138,134,160,.08)}
 
 /* ─── Build Card ─── */
 .build-card{
-  display:block;
-  background:var(--bg-card);
+  display:flex;align-items:center;gap:18px;
+  background:var(--card);
   border:1px solid var(--border);
   border-radius:var(--radius);
-  padding:20px 24px;
+  padding:18px 22px;
   margin-bottom:10px;
-  transition:all .2s ease
+  transition:all .2s ease;
+  position:relative
 }
 .build-card:hover{
   border-color:var(--border-hover);
-  background:var(--bg-card-hover);
+  background:var(--card-hover);
   transform:translateY(-2px)
 }
-.build-header{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:6px}
-.build-weapons{font-size:16px;font-weight:700;color:var(--primary)}
-.build-meta{font-size:11px;color:var(--text-dim);margin-bottom:5px}
-.build-tip{font-size:13px;color:var(--text-dim);line-height:1.5}
+.build-card-left{display:flex;align-items:center;gap:14px;flex-shrink:0}
+.build-card-icons{display:flex;gap:4px;flex-shrink:0}
+.build-card-icon{
+  width:44px;height:44px;
+  background:var(--bg2);
+  border:1px solid var(--border);
+  border-radius:10px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:22px
+}
+.build-card-info{flex:1;min-width:0}
+.build-card-top{display:flex;align-items:center;gap:10px;margin-bottom:2px}
+.build-card-name{font-size:15px;font-weight:700;color:var(--text)}
+.build-card-meta{font-size:11px;color:var(--text-dim)}
+.build-card-desc{font-size:12px;color:var(--text-dim);line-height:1.4;margin-top:2px}
+.build-card-right{display:flex;flex-direction:column;align-items:flex-end;gap:4px;flex-shrink:0}
+.build-card-role{font-size:10px;color:var(--text-dim);text-align:right}
 
 /* ─── Weapon Grid ─── */
-.wep-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:10px;margin-bottom:20px}
+.wep-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;margin-bottom:20px}
 .wep-card{
-  background:var(--bg-card);border:1px solid var(--border);
-  border-radius:var(--radius);padding:20px 14px;
+  background:var(--card);border:1px solid var(--border);
+  border-radius:var(--radius);padding:20px 12px;
   text-align:center;transition:all .15s
 }
-.wep-card:hover{border-color:var(--border-hover);background:var(--bg-card-hover);transform:translateY(-2px)}
-.wep-icon{font-size:34px;display:block;margin-bottom:6px}
-.wep-name{font-size:14px;font-weight:600;margin-bottom:4px}
-.wep-desc{font-size:11px;color:var(--text-dim);line-height:1.5}
+.wep-card:hover{border-color:var(--border-hover);background:var(--card-hover);transform:translateY(-2px)}
+.wep-icon{font-size:36px;display:block;margin-bottom:8px}
+.wep-name{font-size:13px;font-weight:600;margin-bottom:4px}
+.wep-desc{font-size:11px;color:var(--text-dim);line-height:1.5;padding:0 4px}
 
 /* ─── Build Detail ─── */
-.bd-page{max-width:740px;margin:0 auto}
-.back-link{display:inline-flex;align-items:center;gap:4px;color:var(--text-dim);font-size:13px;margin-bottom:20px;transition:color .15s}
+.bd-page{max-width:780px;margin:0 auto}
+.back-link{display:inline-flex;align-items:center;gap:4px;color:var(--text-dim);font-size:13px;margin-bottom:24px;transition:color .15s}
 .back-link:hover{color:var(--primary)}
-.bd-header{display:flex;justify-content:space-between;align-items:flex-start;gap:14px;margin-bottom:28px;flex-wrap:wrap}
+.bd-header{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;margin-bottom:28px;flex-wrap:wrap}
 .bd-title{font-size:26px;font-weight:800;letter-spacing:-.02em}
 .bd-subtitle{font-size:13px;color:var(--text-dim);margin-top:6px}
-.bd-section{margin-bottom:26px}
-.bd-section-title{font-size:16px;font-weight:700;margin-bottom:10px;color:var(--primary);display:flex;align-items:center;gap:8px}
+.bd-section{margin-bottom:28px}
+.bd-section-title{font-size:16px;font-weight:700;margin-bottom:12px;color:var(--primary);display:flex;align-items:center;gap:8px}
 .bd-text{font-size:14px;color:var(--text-dim);line-height:1.8}
 
 /* ─── Pros/Cons ─── */
 .pros-cons{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 .pros,.cons{padding:16px 18px;border-radius:var(--radius-sm);font-size:13px;line-height:1.7}
-.pros{background:rgba(52,211,153,.04);border-left:3px solid var(--success)}
-.cons{background:rgba(248,113,113,.04);border-left:3px solid var(--danger)}
+.pros{background:rgba(52,211,153,.03);border-left:3px solid var(--success)}
+.cons{background:rgba(248,113,113,.03);border-left:3px solid var(--danger)}
 .pros strong,.cons strong{font-size:14px;margin-bottom:6px;display:block}
 .pros strong{color:var(--success)}
 .cons strong{color:var(--danger)}
@@ -181,7 +241,7 @@ a{color:inherit;text-decoration:none}
 .skill-item{
   display:flex;align-items:flex-start;gap:12px;
   padding:12px 14px;
-  background:rgba(11,11,18,.5);
+  background:rgba(10,10,20,.5);
   border:1px solid var(--border);
   border-radius:var(--radius-sm);
   margin-bottom:8px;
@@ -194,8 +254,8 @@ a{color:inherit;text-decoration:none}
 
 /* ─── Rotation ─── */
 .rotation-box{
-  background:rgba(232,199,106,.03);
-  border:1px solid rgba(232,199,106,.1);
+  background:rgba(232,199,106,.02);
+  border:1px solid rgba(232,199,106,.08);
   border-radius:var(--radius-sm);
   padding:16px 18px;
   font-size:13px;line-height:1.8;
@@ -204,45 +264,59 @@ a{color:inherit;text-decoration:none}
 }
 
 /* ─── Tier ─── */
-.tier-row{margin-bottom:24px}
-.tier-label{font-size:28px;font-weight:800;margin-bottom:12px;padding-left:4px;letter-spacing:-.02em}
-.tier-label.tier-s{color:var(--gold)}
-.tier-label.tier-a{color:var(--primary)}
-.tier-label.tier-b{color:var(--text-dim)}
-.tier-item{
-  display:block;
-  background:var(--bg-card);
-  border:1px solid var(--border);
-  border-radius:var(--radius-sm);
-  padding:14px 18px;
-  margin-bottom:8px;
-  transition:all .15s
+.tier-list{display:flex;flex-direction:column;gap:4px}
+.tier-row{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
+.tier-header{
+  display:flex;align-items:center;gap:14px;
+  padding:12px 18px;
+  cursor:default
 }
-.tier-item:hover{border-color:var(--border-hover);background:var(--bg-card-hover);transform:translateX(4px)}
-.tier-weapons{font-weight:600;font-size:14px;color:var(--text)}
-.tier-role{font-size:11px;color:var(--text-dim);margin-top:3px}
+.tier-badge{
+  width:32px;height:32px;border-radius:8px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:14px;font-weight:800;flex-shrink:0
+}
+.tier-badge.s{background:rgba(232,199,106,.12);color:var(--gold)}
+.tier-badge.a{background:rgba(124,140,248,.1);color:var(--primary)}
+.tier-badge.b{background:rgba(138,134,160,.08);color:var(--text-dim)}
+.tier-info{flex:1}
+.tier-label{font-size:13px;font-weight:700}
+.tier-desc{font-size:11px;color:var(--text-dim)}
+.tier-count{font-size:11px;color:var(--text-muted)}
+.tier-items{display:flex;flex-direction:column;gap:0}
+.tier-item{
+  display:flex;align-items:center;gap:14px;
+  padding:10px 18px 10px 64px;
+  border-top:1px solid var(--border);
+  transition:all .12s;
+  min-height:44px
+}
+.tier-item:hover{background:var(--card-hover)}
+.tier-weapons{font-size:13px;font-weight:600;flex:1}
+.tier-role{font-size:11px;color:var(--text-dim)}
+.tier-diff{font-size:10px;color:var(--text-muted)}
 
 /* ─── Guide Cards ─── */
-.guide-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:12px;margin-bottom:10px}
+.guide-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px;margin-bottom:10px}
 .guide-card{
-  display:block;background:var(--bg-card);
+  display:block;background:var(--card);
   border:1px solid var(--border);
   border-radius:var(--radius);
-  padding:18px 20px;
+  padding:20px 22px;
   transition:all .2s ease
 }
-.guide-card:hover{border-color:var(--border-hover);background:var(--bg-card-hover);transform:translateY(-2px)}
-.guide-title{font-size:14px;font-weight:700;margin-bottom:6px;color:var(--text);line-height:1.4}
+.guide-card:hover{border-color:var(--border-hover);background:var(--card-hover);transform:translateY(-2px)}
+.guide-title{font-size:14px;font-weight:700;margin-bottom:8px;color:var(--text);line-height:1.4}
 .guide-summary{font-size:12px;color:var(--text-dim);line-height:1.5}
 
 /* ─── Guide Detail ─── */
-.guide-page{max-width:740px;margin:0 auto}
+.guide-page{max-width:780px;margin:0 auto}
 .guide-header{margin-bottom:28px}
 .guide-h1{font-size:24px;font-weight:800;margin-bottom:10px;letter-spacing:-.02em}
 .guide-desc{font-size:14px;color:var(--text-dim);line-height:1.6}
 .guide-section{
   margin-bottom:18px;
-  background:var(--bg-card);
+  background:var(--card);
   border:1px solid var(--border);
   border-radius:var(--radius);
   padding:20px 24px;
@@ -253,10 +327,10 @@ a{color:inherit;text-decoration:none}
 .guide-p{font-size:14px;color:var(--text-dim);line-height:1.8}
 
 /* ─── Weather ─── */
-.weather-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:24px;margin-bottom:16px}
-.w-select{width:100%;padding:10px 12px;border-radius:var(--radius-sm);border:1px solid var(--border);background:rgba(11,11,18,.6);color:var(--text);font-size:13px;font-family:var(--font);-webkit-appearance:none;appearance:none;cursor:pointer}
+.weather-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:24px;margin-bottom:16px}
+.w-select{width:100%;padding:10px 12px;border-radius:var(--radius-sm);border:1px solid var(--border);background:rgba(10,10,20,.6);color:var(--text);font-size:13px;font-family:var(--font);-webkit-appearance:none;appearance:none;cursor:pointer}
 .w-select:focus{outline:none;border-color:var(--primary)}
-.weather-info,.weather-table{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:20px 24px;margin-bottom:12px;font-size:13px;color:var(--text-dim);line-height:1.7}
+.weather-info,.weather-table{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:20px 24px;margin-bottom:12px;font-size:13px;color:var(--text-dim);line-height:1.7}
 .weather-info h3,.weather-table h3{font-size:14px;font-weight:700;color:var(--text);margin-bottom:10px}
 .w-row{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--border);font-size:13px}
 .w-row:last-child{border:none}
@@ -267,8 +341,8 @@ a{color:inherit;text-decoration:none}
 /* ─── Footer ─── */
 .footer{
   border-top:1px solid var(--border);
-  margin-top:56px;padding:24px 0;
-  background:rgba(11,11,18,.6)
+  margin-top:60px;padding:24px 0;
+  background:rgba(10,10,20,.6)
 }
 .footer-inner{
   max-width:1080px;margin:0 auto;padding:0 24px;
@@ -277,8 +351,8 @@ a{color:inherit;text-decoration:none}
 }
 
 /* ─── Animations ─── */
-@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
-.build-card,.guide-card,.wep-card,.guide-section,.tier-item{animation:fadeUp .35s ease backwards}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.build-card,.guide-card,.wep-card,.guide-section,.tier-row{animation:fadeUp .35s ease backwards}
 .build-card:nth-child(1){animation-delay:.03s}
 .build-card:nth-child(2){animation-delay:.06s}
 .build-card:nth-child(3){animation-delay:.09s}
@@ -297,15 +371,21 @@ a{color:inherit;text-decoration:none}
 
 /* ─── Responsive ─── */
 @media(max-width:640px){
-  .pros-cons{grid-template-columns:1fr}
   .wep-grid{grid-template-columns:1fr 1fr}
   .guide-grid{grid-template-columns:1fr}
   .nav-links{gap:0}
   .nav-link{padding:6px 10px;font-size:.72rem}
-  .hero{padding:36px 0 24px}
-  .hero-features{display:none}
+  .hero{padding:40px 0 28px}
+  .hero-stats{display:none}
+  .wep-showcase{display:none}
   .main{padding:24px 14px 40px}
   .nav-inner{padding:0 14px}
   .bd-title{font-size:20px}
   .guide-h1{font-size:20px}
+  .build-card{flex-direction:column;align-items:flex-start;gap:10px}
+  .build-card-right{flex-direction:row;width:100%;justify-content:flex-start}
+  .build-card-icons{gap:2px}
+  .build-card-icon{width:36px;height:36px;font-size:18px}
+  .pros-cons{grid-template-columns:1fr}
+  .tier-item{padding-left:18px}
 }
