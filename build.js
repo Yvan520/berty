@@ -54,7 +54,7 @@ ${content.meta}
     <div class="nav-links">
       <a href="/" class="nav-link ${content.page==='home'?'active':''}">首页</a>
       <a href="/builds.html" class="nav-link ${content.page==='builds'?'active':''}">Build</a>
-      <a href="/guide/class-guide.html" class="nav-link ${content.page==='guide'?'active':''}">攻略</a>
+      <a href="/guide/" class="nav-link ${content.page==='guide'?'active':''}">攻略</a>
       <a href="/tierlist.html" class="nav-link ${content.page==='tier'?'active':''}">Tier排名</a>
       <a href="/weather.html" class="nav-link ${content.page==='weather'?'active':''}">天气</a>
     </div>
@@ -87,7 +87,7 @@ const homeBody = `
     <span class="game">王权与自由</span>
     <span class="sub">THRONE AND LIBERTY</span>
   </h1>
-  <p>国际服/亚服中文玩家攻略站 — Build指南 · Tier排名 · 天气策略 · 新手攻略</p>
+  <p>国际服/亚服中文玩家攻略站 — ${BUILDS.length}个Build · ${GUIDES.length}篇攻略 · Tier排名 · 天气策略</p>
   <div class="hero-features">
     <span>${BUILDS.length}个流派Build</span>
     <span>S/A/B Tier排名</span>
@@ -333,6 +333,24 @@ GUIDES.forEach(g => {
   }));
 });
 
+// ─── Guide Listing Page ───
+const guideListingBody = `
+<div class="section-header">📖 全部攻略 <span class="dim">— ${GUIDES.length}篇</span></div>
+<div class="guide-grid">
+  ${GUIDES.map(g => `
+    <a href="/guide/${g.slug}.html" class="guide-card">
+      <div class="guide-title">${g.title}</div>
+      <div class="guide-summary">${g.summary.slice(0, 100)}…</div>
+    </a>
+  `).join('')}
+</div>`;
+
+fs.writeFileSync(path.join(DIST, 'guide', 'index.html'), html({
+  page:'guide',
+  meta: meta('全部攻略 — TL Nexus', '王权与自由最新攻略汇总，新手入门/Build/副本/钓鱼/汉化', '/guide/'),
+  body: guideListingBody
+}));
+
 // ─── Sitemap ───
 const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
@@ -340,6 +358,7 @@ const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
   <url><loc>https://berty.gamewayz.com/builds.html</loc><priority>0.9</priority></url>
   <url><loc>https://berty.gamewayz.com/tierlist.html</loc><priority>0.9</priority></url>
   <url><loc>https://berty.gamewayz.com/weather.html</loc><priority>0.8</priority></url>
+  <url><loc>https://berty.gamewayz.com/guide/</loc><priority>0.9</priority></url>
   ${GUIDES.map(g => `<url><loc>https://berty.gamewayz.com/guide/${g.slug}.html</loc><priority>0.8</priority></url>`).join('\n  ')}
   ${BUILDS.map(b => `<url><loc>https://berty.gamewayz.com/build/${b.slug}.html</loc><priority>0.7</priority></url>`).join('\n  ')}
 </urlset>`;
