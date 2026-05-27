@@ -200,7 +200,7 @@ const wepBody = sec(`
 `);
 
 fs.writeFileSync(path.join(DIST, 'weapons.html'), page({
-  meta: meta('王权与自由全武器指南 — 10种武器详解', '王权与自由10种武器完整指南：大剑、剑盾、匕首、长弓、十字弓、法杖、魔杖、铁爪、宝珠、长枪。查看属性、定位和推荐搭配。', '/weapons.html'),
+  meta: meta('王权与自由全武器指南 — 10种武器详解', '王权与自由10种武器完整指南：双手剑(大剑)、长剑(剑盾)、短剑(匕首)、长弓、弩弓、魔杖、魔法棒(补师)、铁爪、魔力球、长矛。查看属性、定位和推荐搭配。', '/weapons.html'),
   body: wepBody
 }));
 
@@ -377,7 +377,7 @@ function guidePage(section){
   const descMap = {
     beginner:'从零开始的新手教程，包含武器选择、主线任务、委托系统、公会、日常循环和天气系统完整指南。',
     morph:'变形系统完整指南，包含飞鸟、狼、鱼、攻城高仑四种形态的解锁和使用方法。',
-    economy:'游戏经济系统全解，包含Lucent、委托币、公会荣誉等货币的获取和使用策略。',
+    economy:'游戏经济系统全解，包含辉币、索兰特币、委托铸币等货币的获取和使用策略。',
     features:'王权与自由核心特色系统详解，包括天气昼夜、武器精通、变形变身、住房、公会领地争夺等。'
   };
   fs.writeFileSync(path.join(DIST, 'guide', `${s.slug}.html`), page({
