@@ -69,6 +69,7 @@ const NAV = `<nav class="sticky top-0 z-50 bg-[#0a0a12]/90 backdrop-blur-md bord
       <a href="/builds.html" class="px-3 py-2 rounded-lg text-[#a09070] hover:text-[#c9a227] hover:bg-[#c9a227]/10 transition">Build</a>
       <a href="/dungeons.html" class="px-3 py-2 rounded-lg text-[#a09070] hover:text-[#c9a227] hover:bg-[#c9a227]/10 transition">副本</a>
       <a href="/pvp.html" class="px-3 py-2 rounded-lg text-[#a09070] hover:text-[#c9a227] hover:bg-[#c9a227]/10 transition">PVP</a>
+      <a href="/guide/fishing.html" class="px-3 py-2 rounded-lg text-[#a09070] hover:text-[#c9a227] hover:bg-[#c9a227]/10 transition">钓鱼</a>
     </div>
   </div>
 </nav>`;
@@ -226,8 +227,8 @@ const buildsBody = sec(`
             <div class="font-semibold text-white">${b.name}</div>
             <span class="text-xs font-bold px-2 py-0.5 rounded" style="background:${t.bg};color:${t.color}">${b.tier}</span>
           </div>
-          <div class="text-[#7a6a4a] text-xs mb-2">${b.role}</div>
-          <p class="text-[#a09070] text-sm">${b.desc}</p>
+           <div class="text-[#7a6a4a] text-xs mb-2">${b.role} · 属性: ${b.stats}</div>
+           <p class="text-[#a09070] text-sm">${b.desc}</p>
         </div>`).join('')}
       </div>
     </div>`;
@@ -306,7 +307,7 @@ fs.writeFileSync(path.join(DIST, 'pvp.html'), page({
 // ─── Guide Pages ───
 function guidePage(section){
   const s = SECTIONS[section];
-  const isList = ['dungeons','pvp','features'].includes(section);
+  const isList = ['dungeons','pvp','features','fishing'].includes(section);
   const body = sec(`
     <div class="mb-8">
       <h1 class="font-cinzel text-3xl md:text-4xl font-bold text-white mb-2">${s.title}</h1>
@@ -368,17 +369,50 @@ function guidePage(section){
         </div>
       </div>`).join('')}
     </div>` : ''}
+    ${section === 'fishing' ? `
+    <div class="mb-6">
+      <div class="font-semibold text-white mb-3">鱼竿列表</div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        ${s.items.map(f => `
+        <div class="${cardCss()} p-4 flex items-start gap-3">
+          <div class="text-2xl flex-shrink-0">🎣</div>
+          <div>
+            <div class="font-semibold text-white text-sm">${f.name}</div>
+            <div class="text-[#7a6a4a] text-xs">${f.source}</div>
+            ${f.desc ? `<div class="text-[#a09070] text-sm">${f.desc}</div>` : ''}
+          </div>
+        </div>`).join('')}
+      </div>
+    </div>
+    <div class="mb-6 ${cardCss()} p-5">
+      <div class="font-semibold text-white mb-3">🎯 钓鱼技巧与钓点</div>
+      <ul class="space-y-2">
+        ${s.tips.map(t => `<li class="flex items-start gap-2 text-sm text-[#a09070]"><span class="text-[#c9a227] mt-1">•</span>${t}</li>`).join('')}
+      </ul>
+    </div>
+    <div class="${cardCss()} p-5">
+      <div class="font-semibold text-white mb-3">📍 特殊钓点位置</div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        ${s.spots.map(sp => `
+        <div class="p-3 rounded-lg bg-[#c9a227]/5 border border-[#c9a227]/10">
+          <div class="font-medium text-white text-sm">${sp.name}</div>
+          <div class="text-[#a09070] text-xs">${sp.desc}</div>
+          <div class="text-[#7a6a4a] text-xs">条件: ${sp.condition}</div>
+        </div>`).join('')}
+      </div>
+    </div>` : ''}
   `);
   return body;
 }
 
-['beginner','morph','economy','features'].forEach(section => {
+['beginner','morph','economy','features','fishing'].forEach(section => {
   const s = SECTIONS[section];
   const descMap = {
     beginner:'从零开始的新手教程，包含武器选择、主线任务、委托系统、公会、日常循环和天气系统完整指南。',
     morph:'变形系统完整指南，包含飞鸟、狼、鱼、攻城高仑四种形态的解锁和使用方法。',
     economy:'游戏经济系统全解，包含辉币、索兰特币、委托铸币等货币的获取和使用策略。',
-    features:'王权与自由核心特色系统详解，包括天气昼夜、武器精通、变形变身、住房、公会领地争夺等。'
+    features:'王权与自由核心特色系统详解，包括天气昼夜、武器精通、变形变身、住房、公会领地争夺等。',
+    fishing:'钓鱼全攻略，9种鱼竿升级路径、全图鉴220种鱼类收集指南、特殊钓点位置和钓鱼技巧。'
   };
   fs.writeFileSync(path.join(DIST, 'guide', `${s.slug}.html`), page({
     meta: meta(`${s.title} — 王权与自由攻略`, descMap[section], `/guide/${s.slug}.html`),
@@ -389,7 +423,7 @@ function guidePage(section){
 // ─── Sitemap ───
 const pages = [
   '/', '/weapons.html', '/builds.html', '/dungeons.html', '/pvp.html',
-  ...['beginner','morph','economy','features'].map(s => `/guide/${s}.html`)
+  ...['beginner','morph','economy','features','fishing'].map(s => `/guide/${s}.html`)
 ];
 
 const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
