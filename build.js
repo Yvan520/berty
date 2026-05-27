@@ -69,6 +69,7 @@ const NAV = `<nav class="sticky top-0 z-50 bg-[#0a0a12]/90 backdrop-blur-md bord
       <a href="/builds.html" class="px-3 py-2 rounded-lg text-[#a09070] hover:text-[#c9a227] hover:bg-[#c9a227]/10 transition">Build</a>
       <a href="/dungeons.html" class="px-3 py-2 rounded-lg text-[#a09070] hover:text-[#c9a227] hover:bg-[#c9a227]/10 transition">副本</a>
       <a href="/pvp.html" class="px-3 py-2 rounded-lg text-[#a09070] hover:text-[#c9a227] hover:bg-[#c9a227]/10 transition">PVP</a>
+      <a href="/guide/farming.html" class="px-3 py-2 rounded-lg text-[#a09070] hover:text-[#c9a227] hover:bg-[#c9a227]/10 transition">搬砖</a>
       <a href="/guide/fishing.html" class="px-3 py-2 rounded-lg text-[#a09070] hover:text-[#c9a227] hover:bg-[#c9a227]/10 transition">钓鱼</a>
     </div>
   </div>
@@ -149,9 +150,28 @@ ${sec(`
     </div>`).join('')}
   </div>
   <div class="text-center mt-8">
-    <a href="/guide/beginner.html" class="inline-flex items-center gap-2 text-[#c9a227] hover:text-white transition">查看完整新手攻略 →</a>
-  </div>
-`)}
+      <a href="/guide/beginner.html" class="inline-flex items-center gap-2 text-[#c9a227] hover:text-white transition">查看完整新手攻略 →</a>
+    </div>
+  `)}
+
+  ${sec(`
+    ${sectionHeader('搬砖与经济','日常·刷怪·交易所')}
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <a href="/guide/farming.html" class="${cardCss()} p-5 hover:-translate-y-1">
+        <div class="text-2xl mb-2">💰</div>
+        <div class="font-semibold text-white text-sm mb-2">每日日常清单</div>
+        <p class="text-[#a09070] text-sm leading-relaxed">混沌石碑委托、星影遗迹、深渊刷怪、世界BOSS…每日必做项目一览表。</p>
+      </a>
+      <a href="/guide/farming.html#trade" class="${cardCss()} p-5 hover:-translate-y-1">
+        <div class="text-2xl mb-2">🏪</div>
+        <div class="font-semibold text-white text-sm mb-2">交易所理财</div>
+        <p class="text-[#a09070] text-sm leading-relaxed">特性提取、跨服套利、版本更新囤货、时间差倒卖策略。</p>
+      </a>
+    </div>
+    <div class="text-center mt-8">
+      <a href="/guide/farming.html" class="inline-flex items-center gap-2 text-[#c9a227] hover:text-white transition">查看完整搬砖攻略 →</a>
+    </div>
+  `)}
 
 ${sec(`
   ${sectionHeader('游戏特色','王权与自由的核心系统')}
@@ -307,7 +327,7 @@ fs.writeFileSync(path.join(DIST, 'pvp.html'), page({
 // ─── Guide Pages ───
 function guidePage(section){
   const s = SECTIONS[section];
-  const isList = ['dungeons','pvp','features','fishing'].includes(section);
+  const isList = ['dungeons','pvp','features','fishing','farming'].includes(section);
   const body = sec(`
     <div class="mb-8">
       <h1 class="font-cinzel text-3xl md:text-4xl font-bold text-white mb-2">${s.title}</h1>
@@ -401,18 +421,72 @@ function guidePage(section){
         </div>`).join('')}
       </div>
     </div>` : ''}
+    ${section === 'farming' ? `
+    <div class="mb-6 ${cardCss()} p-5">
+      <div class="font-semibold text-white mb-3">✅ 每日日常清单</div>
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm">
+          <thead><tr class="text-[#7a6a4a] border-b border-[#c9a227]/10">
+            <th class="text-left py-2 pr-3">任务</th><th class="text-left py-2 pr-3">Sollant</th><th class="text-left py-2 pr-3">额外奖励</th><th class="text-left py-2">优先级</th>
+          </tr></thead>
+          <tbody>${s.checklist.map(c => `
+            <tr class="border-b border-[#c9a227]/5">
+              <td class="py-2 pr-3 text-white">${c.task}</td>
+              <td class="py-2 pr-3 text-[#a09070]">${c.sollant}</td>
+              <td class="py-2 pr-3 text-[#a09070] text-xs">${c.reward}</td>
+              <td class="py-2"><span class="text-xs px-2 py-0.5 rounded ${c.priority==='必做'?'bg-[#ff4757]/20 text-[#ff4757]':c.priority==='必买'?'bg-[#c9a227]/20 text-[#c9a227]':'bg-[#2ed573]/20 text-[#2ed573]'}">${c.priority}</span></td>
+            </tr>`).join('')}
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="mb-6">
+      <div class="font-semibold text-white mb-3">🗺️ 刷怪路线推荐</div>
+      <div class="grid grid-cols-1 gap-3">
+        ${s.routes.map(r => `
+        <div class="${cardCss()} p-4">
+          <div class="flex items-center gap-3 mb-2">
+            <div class="font-semibold text-white">${r.name}</div>
+            <span class="text-xs px-2 py-0.5 rounded bg-[#c9a227]/20 text-[#c9a227]">${r.build}</span>
+            <span class="text-xs text-[#5a4a2a]">${r.weather}</span>
+          </div>
+          <p class="text-[#a09070] text-sm mb-2">${r.desc}</p>
+          <div class="flex gap-4 text-xs text-[#7a6a4a]">
+            <span>收益: ${r.efficiency}</span>
+            <span>药水: ${r.potion}</span>
+          </div>
+        </div>`).join('')}
+      </div>
+    </div>
+    <div class="mb-6 ${cardCss()} p-5">
+      <div class="font-semibold text-white mb-3">💡 刷怪技巧</div>
+      <ul class="space-y-2">
+        ${s.tips.map(t => `<li class="flex items-start gap-2 text-sm text-[#a09070]"><span class="text-[#c9a227] mt-1">•</span>${t}</li>`).join('')}
+      </ul>
+    </div>
+    <div id="trade">
+      <div class="font-semibold text-white mb-3">🏪 交易所赚钱攻略</div>
+      <div class="grid grid-cols-1 gap-3">
+        ${s.trade.map(t => `
+        <div class="${cardCss()} p-4">
+          <div class="font-semibold text-white text-sm mb-1">${t.title}</div>
+          <p class="text-[#a09070] text-sm">${t.desc}</p>
+        </div>`).join('')}
+      </div>
+    </div>` : ''}
   `);
   return body;
 }
 
-['beginner','morph','economy','features','fishing'].forEach(section => {
+['beginner','morph','economy','features','fishing','farming'].forEach(section => {
   const s = SECTIONS[section];
   const descMap = {
     beginner:'从零开始的新手教程，包含武器选择、主线任务、委托系统、公会、日常循环和天气系统完整指南。',
     morph:'变形系统完整指南，包含飞鸟、狼、鱼、攻城高仑四种形态的解锁和使用方法。',
     economy:'游戏经济系统全解，包含辉币、索兰特币、委托铸币等货币的获取和使用策略。',
     features:'王权与自由核心特色系统详解，包括天气昼夜、武器精通、变形变身、住房、公会领地争夺等。',
-    fishing:'钓鱼全攻略，9种鱼竿升级路径、全图鉴220种鱼类收集指南、特殊钓点位置和钓鱼技巧。'
+    fishing:'钓鱼全攻略，9种鱼竿升级路径、全图鉴220种鱼类收集指南、特殊钓点位置和钓鱼技巧。',
+    farming:'搬砖与经济完整指南，每日日常清单、深渊刷怪路线、交易所赚钱技巧和版本理财策略。'
   };
   fs.writeFileSync(path.join(DIST, 'guide', `${s.slug}.html`), page({
     meta: meta(`${s.title} — 王权与自由攻略`, descMap[section], `/guide/${s.slug}.html`),
@@ -423,7 +497,7 @@ function guidePage(section){
 // ─── Sitemap ───
 const pages = [
   '/', '/weapons.html', '/builds.html', '/dungeons.html', '/pvp.html',
-  ...['beginner','morph','economy','features','fishing'].map(s => `/guide/${s}.html`)
+  ...['beginner','morph','economy','features','fishing','farming'].map(s => `/guide/${s}.html`)
 ];
 
 const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
