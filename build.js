@@ -237,6 +237,17 @@ BUILDS.forEach(b => {
     <h3 class="bd-section-title">🌤️ 天气策略</h3>
     <p class="bd-text">${b.weatherAdvice}</p>
   </div>
+  <div class="bd-section">
+    <h3 class="bd-section-title">📖 相关攻略</h3>
+    <div class="guide-grid" style="grid-template-columns:1fr 1fr">
+      ${GUIDES.slice(0,2).map(g => `
+      <a href="/guide/${g.slug}.html" class="guide-card">
+        <div class="guide-title">${g.title}</div>
+        <div class="guide-summary">${g.summary.slice(0,70)}…</div>
+      </a>
+      `).join('')}
+    </div>
+  </div>
 </div>`;
 
   fs.writeFileSync(path.join(DIST, 'build', `${b.slug}.html`), html({
@@ -361,6 +372,10 @@ GUIDES.forEach(g => {
     <p class="guide-p">${s.content}</p>
   </div>
   `).join('')}
+  <div class="section-header" style="margin-top:28px">🔥 相关Build <span class="dim">— 配合这些流派使用</span></div>
+  <div class="build-grid">
+    ${BUILDS.filter((_,i)=>i<3).map(b => buildCardHTML(b)).join('')}
+  </div>
 </div>`;
 
   fs.writeFileSync(path.join(DIST, 'guide', `${g.slug}.html`), html({
