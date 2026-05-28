@@ -1,14 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://berty.gamewayz.com/</loc></url>
-  <url><loc>https://berty.gamewayz.com/weapons.html</loc></url>
-  <url><loc>https://berty.gamewayz.com/builds.html</loc></url>
-  <url><loc>https://berty.gamewayz.com/dungeons.html</loc></url>
-  <url><loc>https://berty.gamewayz.com/pvp.html</loc></url>
-  <url><loc>https://berty.gamewayz.com/guide/beginner.html</loc></url>
-  <url><loc>https://berty.gamewayz.com/guide/morph.html</loc></url>
-  <url><loc>https://berty.gamewayz.com/guide/economy.html</loc></url>
-  <url><loc>https://berty.gamewayz.com/guide/features.html</loc></url>
-  <url><loc>https://berty.gamewayz.com/guide/fishing.html</loc></url>
-  <url><loc>https://berty.gamewayz.com/guide/farming.html</loc></url>
+  <url><loc>https://berty.gamewayz.com/</loc><priority>1.0</priority></url>
+  <url><loc>https://berty.gamewayz.com/news/talandre-expansion.html</loc><priority>0.8</priority></url>
+  <url><loc>https://berty.gamewayz.com/news/update-331.html</loc><priority>0.8</priority></url>
+  <url><loc>https://berty.gamewayz.com/news/new-dungeon-crypt.html</loc><priority>0.8</priority></url>
+  <url><loc>https://berty.gamewayz.com/news/invasion-event.html</loc><priority>0.8</priority></url>
+  <url><loc>https://berty.gamewayz.com/news/server-merge.html</loc><priority>0.8</priority></url>
+  <url><loc>https://berty.gamewayz.com/news/nebula-island.html</loc><priority>0.8</priority></url>
 </urlset>
